@@ -164,8 +164,8 @@ const confirmDelete = async () => {
     </div>
 
     <UiNovoPaciente 
-      v-if="isNewPatientModalOpen" 
-      @close="isNewPatientModalOpen = false"
+      :isOpen="isNewPatientModalOpen"
+      @update:isOpen="isNewPatientModalOpen = $event"
       @success="handleNewPatientSuccess"
     />
     

@@ -43,16 +43,17 @@
       </div>
 
       <div v-for="apt in appointments" :key="apt.id" 
-        class="bg-white border border-gray-200 rounded-xl p-4 flex items-center justify-between hover:shadow-sm transition-shadow">
+        @click="() => { selectedAppointmentId = apt.id; isDetalheModalOpen = true }"
+        class="bg-white border border-gray-200 rounded-xl p-4 flex items-center justify-between hover:shadow-md hover:border-emerald-300 transition-all cursor-pointer">
         
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-4 flex-1">
           <div class="bg-gray-50 rounded-lg p-2 text-center min-w-[70px]">
             <span class="block text-xs font-bold text-emerald-600 uppercase">{{ obterMes(apt.dataHoraInicio) }}</span>
             <span class="block text-xl font-bold text-gray-900">{{ obterDia(apt.dataHoraInicio) }}</span>
           </div>
 
           <div>
-            <h3 class="font-semibold text-gray-900">{{ apt.paciente?.nome || 'Paciente excluído' }}</h3>
+            <h3 class="font-semibold text-gray-900 hover:text-emerald-600 transition-colors">{{ apt.paciente?.nome || 'Paciente excluído' }}</h3>
             <div class="flex items-center gap-3 mt-1">
               <span class="text-sm text-gray-500 flex items-center gap-1">
                 <Clock class="w-3 h-3" /> {{ obterHora(apt.dataHoraInicio) }}
@@ -86,6 +87,12 @@
       @update:isOpen="isModalOpen = $event"
       @success="fetchAppointments" 
     />
+
+    <UiDetalheAgendamento 
+      :isOpen="isDetalheModalOpen"
+      :appointmentId="selectedAppointmentId || undefined"
+      @update:isOpen="isDetalheModalOpen = $event"
+    />
   </div>
 </template>
 
@@ -94,6 +101,8 @@ import { ref } from 'vue'
 import { Calendar, Clock, User, Trash2, Loader2 } from 'lucide-vue-next'
 
 const isModalOpen = ref(false)
+const isDetalheModalOpen = ref(false)
+const selectedAppointmentId = ref<number | null>(null)
 const excluindo = ref<number | null>(null)
 const abaAtiva = ref<'proximos' | 'hoje' | 'historico'>('proximos')
 

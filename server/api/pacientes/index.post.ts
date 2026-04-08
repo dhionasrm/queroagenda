@@ -21,6 +21,7 @@ export default defineEventHandler(async (event) => {
         email: body.email || null,
         telefone: body.telefone || null,
         dataNascimento: dataNasc,
+        tipoAtendimento: body.tipoAtendimento || null,
         observacoes: body.observacoes || null
       }
     })

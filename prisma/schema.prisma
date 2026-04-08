@@ -54,6 +54,7 @@ model Patient {
   telefone       String?   @db.VarChar(20)
   email          String?   @db.VarChar(100)
   dataNascimento DateTime? @map("data_nascimento") @db.Date
+  tipoAtendimento String?  @map("tipo_atendimento") @db.VarChar(100)  // Particular, Unimed, etc
   observacoes    String?   @db.Text
   ativo          Boolean   @default(true)
   createdAt      DateTime  @default(now()) @map("created_at")
